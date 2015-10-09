@@ -1,0 +1,73 @@
+<p id="maze" style="display:none">
++-----------+
+|. . .|. . .|
+| +-- | ----|
+|.|. .|. . .|
+| | --|---- |
+|.|. .|. . .|
+| |-- | +-- |
+|.|. . .|. .|
+| +-------+ |
+|. . .|. .|.|
+| --| | +-+ |
+|. .|. .|. .|
++-----------+
+</p>
+
+<script>
+
+var pairs = [
+	[21,36],
+	[25,42],
+	[44,46],
+	[11,41],
+	[35,64],
+	[15,53],
+	[12,62],
+	[14,43],
+	[23,51]
+];
+
+var maze = document.getElementById("maze").innerHTML.trim().split("\n").map(function (row){
+	return row.split("");
+});
+
+var walls = [];
+
+for (var i = 1; i < 6; i++){
+	for (var j = 1; j < 6; j++){
+		if (maze[(i*2)-1][j*2].trim()){
+			walls.push("" + i + j + i + (j+1));
+		}
+	}
+	for (var j = 1; j <= 6; j++){
+		if (maze[i*2][(j*2)-1].trim()){
+			walls.push("" + i + j + (i+1) + j);
+		}
+	}
+}
+
+console.log(walls);
+
+// var input = prompt("indicator?");
+
+// for (var i in pairs){
+// 	for (var j in pairs[i]){
+// 		if (pairs[i][j] == input){
+// 			var ok = confirm(pairs[i][1-j] + "?");
+// 			if (ok){
+// 				var start = prompt("start:");
+// 				var finish = prompt("finish:");
+// 				alert(solve(start, finish));
+// 			} else {
+// 				alert('wtf!?');
+// 			}
+// 		}
+// 	}
+// }
+
+// function solve (start, finish){
+// 	return start + " " + finish;
+// }
+
+</script>
