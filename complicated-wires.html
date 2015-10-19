@@ -1,0 +1,58 @@
+<script>
+
+var lsd = null;
+var pp = null;
+var batts = null;
+
+function onChange (input){
+
+	var rows = input.toUpperCase().split("\n");
+	var out = [];
+
+	for (var i in rows){
+
+		if (i == rows.length - 1) continue;
+
+		var r = rows[i];
+
+		var cond = 0;
+		var sets = ["R", "B", "S", "L"];
+		var n = Math.pow(2, sets.length - 1);
+		for (var i in sets){
+			if (r.indexOf(sets[i]) != -1) cond += n;
+			n /= 2;
+		}
+
+		var o;
+		switch(["C", "D", "C", "B", "S", "P", "D", "P", "S", "B", "C", "B", "S", "S", "P", "D"][cond]){
+			case "C": { o = 1; break; }
+			case "D": { o = 0; break; }
+			case "S": {
+				if (lsd == null) lsd = prompt("lsd");
+				o = !(lsd % 2);
+				break;
+			}
+			case "P": {
+				if (pp == null) pp = confirm("has parallel port?");
+				o = pp;
+				break;
+			}
+			case "B": {
+				if (batts == null) batts = prompt("how many batteries?");
+				o = batts >= 2;
+				break;
+			}
+		}
+
+		out.push(o ? "CUT" : "DON'T CUT");
+
+	}
+
+	document.getElementById('out').innerHTML = out.join("<br/>");
+
+}
+
+</script>
+
+<textarea id="in" style="height: 100px" onKeyUp="onChange(this.value)"></textarea>
+<p id="out"/>
