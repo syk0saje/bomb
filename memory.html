@@ -1,0 +1,66 @@
+<script>
+
+function onChange (input){
+
+	var rows = input.toLowerCase().split("\n").map(function (row){
+		return row.split("");
+	});
+
+	var out = [];
+
+	for (var i in rows){
+		var j = parseInt(i) + 1;
+		var disp = parseInt(rows[i][0]);
+		switch (j){
+			case 1: {
+				switch (disp){
+					case 1: out.push(rows[i][2]); break;
+					default: out.push(rows[i][disp]);
+				}
+				break;
+			}
+			case 2: {
+				switch (disp){
+					case 1: out.push(4); break;
+					case 3: out.push(rows[i][1]); break;
+					default: out.push(rows[i][rows[0].slice(1).indexOf(out[0])+1]);
+				}
+				break;
+			}
+			case 3: {
+				switch (disp){
+					case 1: out.push(out[1]); break;
+					case 2: out.push(out[0]); break;
+					case 3: out.push(rows[i][3]); break;
+					case 4: out.push(4);
+				}
+				break;
+			}
+			case 4: {
+				switch (disp){
+					case 1: out.push(rows[i][rows[0].slice(1).indexOf(out[0])+1]); break;
+					case 2: out.push(rows[i][1]); break;
+					default: out.push(rows[i][rows[1].slice(1).indexOf(out[1])+1]);
+				}
+				break;
+			}
+			case 5: {
+				switch (disp){
+					case 1: out.push(out[0]); break;
+					case 2: out.push(out[1]); break;
+					case 3: out.push(out[3]); break;
+					case 4: out.push(out[2]);
+				}
+				break;
+			}
+		}
+	}
+
+	document.getElementById('out').innerHTML = out.join("<br/>");
+
+}
+
+</script>
+
+<textarea id="in" style="height: 100px" onKeyUp="onChange(this.value)"></textarea>
+<p id="out"/>
