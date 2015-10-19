@@ -1,0 +1,36 @@
+<script>
+
+var key = {
+	R: ["C", "B", "A", "AC", "B", "AC", "ABC", "AB", "B"],
+	B: ["B", "AC", "B", "A", "B", "BC", "C", "AC", "A"],
+	X: ["ABC", "AC", "B", "AC", "B", "BC", "AB", "C", "C"]
+};
+
+function onChange (input){
+
+	var count = {};
+	["R", "B", "X"].map(function (c){ count[c] = 0; });
+
+	var rows = input.toUpperCase().split("\n");
+	var out = [];
+	for (var i in rows){
+
+		var r = rows[i].trim();
+		if (r.length != 2) break;
+
+		var color = r[0];
+		var letter = r[1];
+
+		var o = key[color][count[color]++].indexOf(letter) == -1 ? "DON'T " : "";
+		out.push(o + "CUT");
+
+	}
+
+	document.getElementById('out').innerHTML = out.join("<br/>");
+
+}
+
+</script>
+
+<textarea id="in" style="height: 100px" onKeyUp="onChange(this.value)"></textarea>
+<p id="out"/>
