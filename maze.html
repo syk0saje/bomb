@@ -1,4 +1,4 @@
-<p id="maze" style="display:none">
+<p id="mazes" style="display:none">
 +-----------+
 |. . .|. . .|
 | +-- | ----|
@@ -11,6 +11,20 @@
 |. . .|. .|.|
 | --| | +-+ |
 |. .|. .|. .|
++-----------+
+
++-----------+
+|. . .|. . .|
+|-- +-+   --|
+|. .|. .|. .|
+| +-+ +-+-- |
+|.|. .|. . .|
+| | --+ +-+ |
+|. .|. .|.|.|
+| +-+ --- | |
+|.|.|.|. .|.|
+| | | | --+ |
+|.|. .|. . .|
 +-----------+
 </p>
 
@@ -35,24 +49,11 @@ var pairs = [
 	[23,51]
 ];
 
-var maze = document.getElementById("maze").innerHTML.trim().split("\n").map(function (row){
-	return row.split("");
+var mazes = document.getElementById("mazes").innerHTML.trim().split("\n\n").map(function (maze){
+	return maze.split("\n").map(function (row){ return row.split(""); });
 });
 
 var walls = [];
-
-for (var i = 1; i < 6; i++){
-	for (var j = 1; j < 6; j++){
-		if (maze[(i*2)-1][j*2].trim()){
-			walls.push("" + i + j + i + (j+1));
-		}
-	}
-	for (var j = 1; j <= 6; j++){
-		if (maze[i*2][(j*2)-1].trim()){
-			walls.push("" + i + j + (i+1) + j);
-		}
-	}
-}
 
 var input = prompt("indicator?");
 
@@ -61,6 +62,21 @@ for (var i in pairs){
 		if (pairs[i][j] == input){
 			var ok = confirm(pairs[i][1-j] + "?");
 			if (ok){
+
+				var maze = mazes[i];
+				for (var i = 1; i < 6; i++){
+					for (var j = 1; j < 6; j++){
+						if (maze[(i*2)-1][j*2].trim()){
+							walls.push("" + i + j + i + (j+1));
+						}
+					}
+					for (var j = 1; j <= 6; j++){
+						if (maze[i*2][(j*2)-1].trim()){
+							walls.push("" + i + j + (i+1) + j);
+						}
+					}
+				}
+
 				var start = parseInt(prompt("start:"));
 				var finish = parseInt(prompt("finish:"));
 				alert(directionalize(solve(start, finish, [start])));
