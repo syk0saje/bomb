@@ -1,0 +1,50 @@
+<script>
+
+var vowel = confirm("serial has vowel?");
+var input = "";
+var strikes = 0;
+
+function translate (c){
+
+	var map = vowel ? {
+		R: ["B", "Y", "G"],
+		B: ["R", "G", "R"],
+		G: ["Y", "B", "Y"],
+		Y: ["G", "R", "B"]
+	} : {
+		R: ["B", "R", "Y"],
+		B: ["Y", "B", "G"],
+		G: ["G", "Y", "B"],
+		Y: ["R", "G", "R"]
+	};
+
+	return map[c][strikes];
+
+}
+
+function onChange (val){
+	input = val;
+	document.getElementById("out").value = input.toUpperCase().split("").map(translate).join("");
+}
+
+function setStrikes (s){
+	strikes = s;
+	onChange(input);
+}
+
+</script>
+
+<label>
+	input:
+	<input id="in" onKeyUp="onChange(this.value)" autofocus/>
+</label>
+
+<label>
+	output:
+	<input id="out" disabled/>
+</label>
+
+<label>
+	strikes:
+	<input id="strikes" onKeyUp="setStrikes(this.value)" value="0"/>
+</label>
