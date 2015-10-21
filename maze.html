@@ -16,6 +16,13 @@
 
 <script>
 
+var dir = {
+	"-10": "UP",
+	"10": "DOWN",
+	"-1": "LEFT",
+	"1": "RIGHT"
+};
+
 var pairs = [
 	[21,36],
 	[25,42],
@@ -47,27 +54,59 @@ for (var i = 1; i < 6; i++){
 	}
 }
 
-console.log(walls);
+var input = prompt("indicator?");
 
-// var input = prompt("indicator?");
+for (var i in pairs){
+	for (var j in pairs[i]){
+		if (pairs[i][j] == input){
+			var ok = confirm(pairs[i][1-j] + "?");
+			if (ok){
+				var start = parseInt(prompt("start:"));
+				var finish = parseInt(prompt("finish:"));
+				alert(directionalize(solve(start, finish, [start])));
+			} else {
+				alert('wtf!?');
+			}
+		}
+	}
+}
 
-// for (var i in pairs){
-// 	for (var j in pairs[i]){
-// 		if (pairs[i][j] == input){
-// 			var ok = confirm(pairs[i][1-j] + "?");
-// 			if (ok){
-// 				var start = prompt("start:");
-// 				var finish = prompt("finish:");
-// 				alert(solve(start, finish));
-// 			} else {
-// 				alert('wtf!?');
-// 			}
-// 		}
-// 	}
-// }
+function directionalize (path){
 
-// function solve (start, finish){
-// 	return start + " " + finish;
-// }
+	var out = [];
+	for (var i in path){
+		var src = path[i];
+		var dest = path[parseInt(i)+1];
+		if (dest) out.push(dir[dest - src]);
+	}
+	
+	return out.join("\n");
+
+}
+
+function oob (pt){
+	var x = parseInt(pt / 10);
+	var y = pt % 10;
+	return (x < 1) || (x > 6) || (y < 1) || (y >6);
+}
+
+function solve (start, finish, path){
+
+	for (var offset in dir){
+		offset = parseInt(offset);
+		var dest = start + offset;
+		if (oob(dest)) continue;
+		if (path.indexOf(dest) != -1) continue;
+		var wall = [start, dest].sort().join("");
+		if (walls.indexOf(wall) == -1){
+			path.push(dest);
+			if (dest == finish) return path;
+			var solution = solve(dest, finish, path);
+			if (solution) return solution;
+			path.pop();
+		}
+	};
+
+}
 
 </script>
