@@ -1,0 +1,72 @@
+<script>
+
+var code = {
+	".-": "A",
+	"-...": "B",
+	"-.-.": "C",
+	"-..": "D",
+	".": "E",
+	"..-.": "F",
+	"--.": "G",
+	"....": "H",
+	"..": "I",
+	".---": "J",
+	"-.-": "K",
+	".-..": "L",
+	"--": "M",
+	"-.": "N",
+	"---": "O",
+	".--.": "P",
+	"--.-": "Q",
+	".-.": "R",
+	"...": "S",
+	"-": "T",
+	"..-": "U",
+	"...-": "V",
+	".--": "W",
+	"-..-": "X",
+	"-.--": "Y",
+	"--..": "Z"
+};
+
+var freq = {
+	"shell": "3.505",
+	"halls": "3.515",
+	"slick": "3.522",
+	"trick": "3.532",
+	"boxes": "3.535",
+	"leaks": "3.542",
+	"strobe": "3.545",
+	"bistro": "3.552",
+	"flick": "3.555",
+	"bombs": "3.565",
+	"break": "3.572",
+	"brick": "3.575",
+	"steak": "3.582",
+	"sting": "3.592",
+	"vector": "3.595",
+	"beats": "3.600"
+}
+
+function translate (morse){ return code[morse] || "?"; }
+
+function onChange (value){
+
+	var wordFrag = value.trim().split(" ").map(translate).join("").toLowerCase();
+
+	var out = wordFrag + "<hr/>";
+	var options = [];
+	for (var i in freq){
+		var ss = i+i;
+		if (ss.indexOf(wordFrag) != -1) options.push(i + ": " + freq[i]);
+	}
+	out += options.join("<br/>");
+
+	document.getElementById('out').innerHTML = out;
+
+}
+
+</script>
+
+<textarea id="in" style="height: 100px" onKeyUp="onChange(this.value)"></textarea>
+<p id="out"/>
