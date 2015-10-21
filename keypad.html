@@ -1,0 +1,47 @@
+<div id="buttons"></div>
+<script>
+
+var selected = [];
+
+var seqs = [
+	[0, 1, 2, 3, 4, 5, 6],
+	[7, 0, 8, 9, 10, 5, 11],
+	[12, 13, 9, 14, 15, 16, 10],
+	[17, 18, 19, 4, 14, 11, 20],
+	[21, 20, 19, 22, 18, 23, 24],
+	[17, 7, 25, 26, 21, 27, 28]
+];
+
+function render (id){
+
+	if (typeof id != 'undefined'){
+		var i = parseInt(id.split("-")[1]);
+		if (selected.indexOf(i) == -1){
+			selected.push(i);
+		}
+	}
+
+	var validKeys = seqs.filter(function (seq){
+		return selected.every(function (s){
+			return seq.indexOf(s) != -1;
+		});
+	}).reduce(function (x, y){ return x.concat(y); });
+	var done = [];
+
+	var buttons = document.getElementById("buttons");
+	buttons.innerHTML = "";
+	for (var j in validKeys){
+		var i = validKeys[j];
+		if (done[i]) continue;
+		done[i] = true;
+		if ((selected.length == 4) && (selected.indexOf(i) == -1)) continue;
+		var style = "background: url(keypad/" + i + ".png); width: 80px; height: 80px";
+		var button = "<button style='" + style + "' id='button-" + i + "' onClick='render(this.id)' />";
+		buttons.innerHTML += button;
+	}
+
+}
+
+render();
+
+</script>
