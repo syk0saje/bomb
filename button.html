@@ -1,0 +1,40 @@
+<script>
+
+	var input = prompt("color word?").toUpperCase().split(" ");
+	var color = input[0];
+	var word = input[1];
+
+	function hold (){
+		switch (prompt("hold button. color?").toUpperCase()){
+			case "B": alert(4); break;
+			case "Y": alert(5); break;
+			default: alert(1);
+		}
+
+	}
+
+	function quick (){ alert('quick'); }
+
+	var batts = null;
+	function batt (){
+		if (batts == null) batts = parseInt(prompt("how many batteries?"))
+		return batts;
+	}
+
+	function withLabel (label){ return confirm(label + " label?"); }
+
+	if (color == "B" && word == "ABORT"){
+		hold();
+	} else if (batt() > 1 && word == "DETONATE"){
+		quick();
+	} else if (color == "W" && withLabel("CAR")){
+		hold();
+	} else if (batt() > 2 && withLabel("FRK")){
+		quick();
+	} else if (color == "Y"){
+		hold();
+	} else if (color == "R" && word == "HOLD"){
+		quick();
+	}	else hold();
+
+</script>
